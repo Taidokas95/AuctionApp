@@ -8,6 +8,7 @@ public class Auction
     public int AuctionStartingPrice { get; }
     public int UserId { get; }
     public DateTime AuctionEndDate { get; }
+    public int WinnerId { get; set; }
     private List<Bid> _bids = new List<Bid>();
     public IEnumerable<Bid> Bids => _bids;
 
