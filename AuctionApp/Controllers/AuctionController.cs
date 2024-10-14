@@ -1,9 +1,17 @@
+using AuctionApp.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuctionApp.Controllers
 {
     public class AuctionController : Controller
     {
+
+        private IAuctionService _auctionService;
+
+        public AuctionController(IAuctionService auctionService)
+        {
+            _auctionService = auctionService;
+        }
         // GET: AuctionController
         public ActionResult Index()
         {

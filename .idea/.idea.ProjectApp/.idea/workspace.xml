@@ -9,11 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="55c733bf-c944-49f8-a45d-126e47de0ae4" name="Changes" comment="implementing the IAuctionService interface">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectApp/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectApp/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuctionApp/Core/AuctionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AuctionApp/Core/AuctionService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AuctionApp/Core/Interfaces/IAuctionService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AuctionApp/Core/Interfaces/IAuctionService.cs" afterDir="false" />
-    </list>
+    <list default="true" id="55c733bf-c944-49f8-a45d-126e47de0ae4" name="Changes" comment="AuctionService.cs methods added" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,7 +115,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1728545857243</updated>
-      <workItem from="1728545858675" duration="12790000" />
+      <workItem from="1728545858675" duration="13131000" />
     </task>
     <task id="LOCAL-00001" summary="inital commit">
       <option name="closed" value="true" />
@@ -145,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728654932331</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="AuctionService.cs methods added">
+      <option name="closed" value="true" />
+      <created>1728893796876</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1728893796876</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +163,7 @@
     <MESSAGE value="inital commit" />
     <MESSAGE value="IAuctionService methods added" />
     <MESSAGE value="implementing the IAuctionService interface" />
-    <option name="LAST_COMMIT_MESSAGE" value="implementing the IAuctionService interface" />
+    <MESSAGE value="AuctionService.cs methods added" />
+    <option name="LAST_COMMIT_MESSAGE" value="AuctionService.cs methods added" />
   </component>
 </project>

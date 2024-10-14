@@ -1,7 +1,12 @@
+using AuctionApp.Core;
+using AuctionApp.Core.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IAuctionService, AuctionService>();
 
 var app = builder.Build();
 
