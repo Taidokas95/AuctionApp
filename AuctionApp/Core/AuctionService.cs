@@ -11,13 +11,7 @@ public class AuctionService : IAuctionService
 
     public Auction GetAuctionById(int id)
     {
-        var a = _auctions.Find(auction => auction.AuctionId == id);
-        if (a != null)
-        {
-            return a;
-        }
-
-        throw new Exception("Auction Not Found");
+         return _auctions.Find(auction => auction.AuctionId == id);
     }
 
     public List<Auction> GetOngoingAuctionsByBidUserid(int id)

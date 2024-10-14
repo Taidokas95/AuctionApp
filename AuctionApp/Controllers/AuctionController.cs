@@ -29,7 +29,10 @@ namespace AuctionApp.Controllers;
         // GET: AuctionController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Auction auction = _auctionService.GetAuctionById(id);
+            if (auction == null) return BadRequest(); // HTTP 400
+            AuctionDetailsVm detailsVm = AuctionDetailsVm.FromAuction(auction);
+            return View(detailsVm);
         }
 
         // GET: AuctionController/Create
