@@ -6,7 +6,7 @@ public class AuctionService : IAuctionService
 {
     public List<Auction> GetOngoingAuctions()
     {
-        return _auctions.FindAll(auction => auction.AuctionEndDate < DateTime.Now);
+        return _auctions.FindAll(auction => auction.AuctionEndDate > DateTime.Now);
     }
 
     public Auction GetAuctionById(int id)

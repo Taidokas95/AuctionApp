@@ -1,8 +1,10 @@
+using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
+using AuctionApp.Models.Auctions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AuctionApp.Controllers
-{
+namespace AuctionApp.Controllers;
+    
     public class AuctionController : Controller
     {
 
@@ -15,7 +17,13 @@ namespace AuctionApp.Controllers
         // GET: AuctionController
         public ActionResult Index()
         {
-            return View();
+            List<Auction> auctions = _auctionService.GetOngoingAuctions();
+            List<AuctionVm> auctionsVms = new List<AuctionVm>();
+            foreach (var auction in auctions)
+            {
+               auctionsVms.Add(AuctionVm.FromAuction(auction)); 
+            }
+            return View(auctionsVms);
         }
 
         // GET: AuctionController/Details/5
@@ -87,4 +95,4 @@ namespace AuctionApp.Controllers
             }
         }
     }
-}
+

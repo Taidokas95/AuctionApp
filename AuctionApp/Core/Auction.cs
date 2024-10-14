@@ -24,16 +24,20 @@ public class Auction
 
     public void AddBid(Bid bid)
     {
-        var currentHighestBid = _bids[_bids.Count - 1];
-        if (bid.BidAmount > currentHighestBid.BidAmount)
+        if (_bids.Contains(bid))
         {
-            _bids.Add(bid);
-            
+            var currentHighestBid = _bids[_bids.Count - 1];
+            if (bid.BidAmount > currentHighestBid.BidAmount)
+            {
+                _bids.Add(bid);
+
+            }
+            else
+            {
+                throw new Exception("The amount must be higher than the current highest bid");
+            }
         }
-        else
-        {
-            throw new Exception("The amount must be higher than the current highest bid");
-        }
+        _bids.Add(bid);
     }
 
     public int DetermineWinner()
