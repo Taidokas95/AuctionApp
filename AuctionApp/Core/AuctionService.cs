@@ -23,7 +23,7 @@ public class AuctionService : IAuctionService
     public List<Auction> GetOngoingAuctionsByBidUserid(int id)
     {
         var a = GetOngoingAuctions();
-        List<Auction> matchingAuctions = new List<Auction>();
+        var matchingAuctions = new List<Auction>();
         foreach (var auction in a)
         {
             if (GetBidsByUserId(id, auction))
@@ -35,28 +35,34 @@ public class AuctionService : IAuctionService
         return matchingAuctions;
     }
 
-    public bool GetBidsByUserId(int id, Auction auction)
+    private bool GetBidsByUserId(int id, Auction auction)
     {
-        var userIdpresent = 0;
+        var userIdPresent = 0;
         foreach (var bid in auction.Bids)
         {
             if (bid.UserID == id)
             {
-                userIdpresent++;
+                userIdPresent++;
             }
         }
 
-        return userIdpresent > 0;
+        return userIdPresent > 0;
     }
 
-    public List<Auction> GetWonAuctionsByUserId()
+    public List<Auction> GetWonAuctionsByUserId(int Id)
     {
-        throw new NotImplementedException();
+        return CompletedAuctions().FindAll(auction => Id == auction.WinnerId);
+        
+    }
+
+    private List<Auction> CompletedAuctions()
+    {
+        return _auctions.FindAll(auction => auction.AuctionEndDate > DateTime.Now);
     }
 
     public void AddAuction(Auction auction)
     {
-        throw new NotImplementedException();
+        _auctions.Add(auction);
     }
 
     public void AddBid(Bid bid)

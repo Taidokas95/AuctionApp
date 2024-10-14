@@ -8,7 +8,7 @@ public interface IAuctionService
     
     List<Auction> GetOngoingAuctionsByBidUserid(int id);
     
-    List<Auction> GetWonAuctionsByUserId();
+    List<Auction> GetWonAuctionsByUserId(int id);
     
     void AddAuction(Auction auction);
     
