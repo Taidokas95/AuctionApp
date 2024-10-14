@@ -12,6 +12,6 @@ public interface IAuctionService
     
     void AddAuction(Auction auction);
     
-    void AddBid(Bid bid);
+    void AddBid(Bid bid, int auctionId);
     
 }

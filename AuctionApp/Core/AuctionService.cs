@@ -64,11 +64,37 @@ public class AuctionService : IAuctionService
     {
         _auctions.Add(auction);
     }
-
-    public void AddBid(Bid bid)
+    
+    
+    public void AddBid(Bid bid, int auctionId)
     {
-        throw new NotImplementedException();
+        var auction = GetAuctionById(auctionId);
+        
+        if (!auction.Bids.Any())
+        {
+            if (bid.BidAmount >= auction.AuctionStartingPrice)
+            {
+                auction.AddBid(bid);
+            }
+            else
+            {
+                throw new Exception($"The bid amount must be equal to or higher than the starting price.");
+            }
+        }
+        else
+        {
+            var currentHighestBid = auction.Bids.Last();
+            if (bid.BidAmount > currentHighestBid.BidAmount)
+            {
+                auction.AddBid(bid);
+            }
+            else
+            {
+                throw new Exception("The amount must be higher than the current highest bid.");
+            }
+        }
     }
+
 
     private static readonly List<Auction> _auctions = new();
 
