@@ -1,5 +1,7 @@
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
+using AuctionApp.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAuctionService, AuctionService>();
+
+builder.Services.AddDbContext<AuctionDbContext>(
+    options => options.UseMySQL(
+        builder.Configuration.GetConnectionString("AuctionDbConnection")));
 
 var app = builder.Build();
 
