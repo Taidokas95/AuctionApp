@@ -20,7 +20,7 @@ public class AuctionService : IAuctionService
 
     public Auction GetAuctionById(int id)
     {
-        Auction auction = GetAuctionById(id);
+        Auction auction = _auctionPersistence.GetAuctionById(id);
         return auction;
     }
 

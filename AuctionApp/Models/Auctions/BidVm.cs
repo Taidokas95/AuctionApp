@@ -14,9 +14,6 @@ public class BidVm
     public int UserId { get; set; }
     
     public DateTime Date { get; set; }
-    
-    
-    public DateTime EndDate { get; set; }
 
     public static BidVm FromBid(Bid bid)
     {
