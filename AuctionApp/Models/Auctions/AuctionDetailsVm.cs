@@ -25,11 +25,11 @@ public class AuctionDetailsVm
     {
         var detailsVM = new AuctionDetailsVm()
         {
-            Id = auction.AuctionId,
-            Name = auction.AuctionName,
-            Description = auction.AuctionDescription,
-            Price = auction.AuctionStartingPrice,
-            EndDate = auction.AuctionEndDate
+            Id = auction.Id,
+            Name = auction.Name,
+            Description = auction.Description,
+            Price = auction.StartingPrice,
+            EndDate = auction.EndTime
         };
         foreach (var bid in auction.Bids)
         {

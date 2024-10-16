@@ -14,6 +14,10 @@ builder.Services.AddDbContext<AuctionDbContext>(
     options => options.UseMySQL(
         builder.Configuration.GetConnectionString("AuctionDbConnection")));
 
+builder.Services.AddScoped<IAuctionPersistence, MySqlAuctionPersistence>();
+
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

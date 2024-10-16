@@ -2,24 +2,24 @@
 
 public class Auction
 {
-    public int AuctionId { get; }
-    public string AuctionName { get; }
-    public string AuctionDescription { get; set; }
-    public int AuctionStartingPrice { get; }
+    public int Id { get; }
+    public string Name { get; }
+    public string Description { get; set; }
+    public int StartingPrice { get; }
     public int UserId { get; }
-    public DateTime AuctionEndDate { get; }
+    public DateTime EndTime { get; }
     public int WinnerId { get; set; }
     private List<Bid> _bids = new List<Bid>();
     public IEnumerable<Bid> Bids => _bids;
 
-    public Auction(int id, string name, string description, int startingPrice, int userId, DateTime auctionEndDate)
+    public Auction(int id, string name, string description, int startingPrice, int userId, DateTime endTime)
     {
-        this.AuctionId = id;
-        this.AuctionName = name;
-        this.AuctionDescription = description;
-        this.AuctionStartingPrice = startingPrice;
+        this.Id = id;
+        this.Name = name;
+        this.Description = description;
+        this.StartingPrice = startingPrice;
         this.UserId = userId;
-        this.AuctionEndDate = auctionEndDate;
+        this.EndTime = endTime;
     }
 
     public void AddBid(Bid bid)
@@ -27,7 +27,7 @@ public class Auction
         if (_bids.Contains(bid))
         {
             var currentHighestBid = _bids[_bids.Count - 1];
-            if (bid.BidAmount > currentHighestBid.BidAmount)
+            if (bid.Amount > currentHighestBid.Amount)
             {
                 _bids.Add(bid);
 
@@ -48,7 +48,7 @@ public class Auction
 
     public void EditDescription(string newDescription)
     {
-        this.AuctionDescription = newDescription;
+        this.Description = newDescription;
     }
 
    

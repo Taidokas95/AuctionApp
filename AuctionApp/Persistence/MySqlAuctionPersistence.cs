@@ -1,6 +1,14 @@
-﻿namespace AuctionApp.Persistence;
+﻿using AuctionApp.Core.Interfaces;
 
-public class MySqlAuctionPersistence
+namespace AuctionApp.Persistence;
+
+public class MySqlAuctionPersistence : IAuctionPersistence
 {
-    
+    private AuctionDbContext dbContext;
+
+    public AuctionSqlPersistence(AuctionDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
 }

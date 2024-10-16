@@ -6,12 +6,12 @@ public class AuctionService : IAuctionService
 {
     public List<Auction> GetOngoingAuctions()
     {
-        return _auctions.FindAll(auction => auction.AuctionEndDate > DateTime.Now);
+        return _auctions.FindAll(auction => auction.EndTime > DateTime.Now);
     }
 
     public Auction GetAuctionById(int id)
     {
-         return _auctions.Find(auction => auction.AuctionId == id);
+         return _auctions.Find(auction => auction.Id == id);
     }
 
     public List<Auction> GetOngoingAuctionsByBidUserid(int id)
@@ -51,7 +51,7 @@ public class AuctionService : IAuctionService
 
     private List<Auction> CompletedAuctions()
     {
-        return _auctions.FindAll(auction => auction.AuctionEndDate > DateTime.Now);
+        return _auctions.FindAll(auction => auction.EndTime > DateTime.Now);
     }
 
     public void AddAuction(Auction auction)
@@ -66,7 +66,7 @@ public class AuctionService : IAuctionService
         
         if (!auction.Bids.Any())
         {
-            if (bid.BidAmount >= auction.AuctionStartingPrice)
+            if (bid.Amount >= auction.StartingPrice)
             {
                 auction.AddBid(bid);
             }
@@ -78,7 +78,7 @@ public class AuctionService : IAuctionService
         else
         {
             var currentHighestBid = auction.Bids.Last();
-            if (bid.BidAmount > currentHighestBid.BidAmount)
+            if (bid.Amount > currentHighestBid.Amount)
             {
                 auction.AddBid(bid);
             }

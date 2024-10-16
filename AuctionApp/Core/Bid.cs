@@ -2,15 +2,15 @@
 
 public class Bid
 {
-    public int BidID { get; }
-    public int BidAmount { get; }
+    public int Id { get; }
+    public int Amount { get; }
     public int UserID { get; }
     public DateTime Date { get; }
 
-    public Bid(int bidID, int bidAmount, int userID, DateTime date)
+    public Bid(int id, int amount, int userID, DateTime date)
     {
-        this.BidID = bidID;
-        this.BidAmount = bidAmount;
+        this.Id = id;
+        this.Amount = amount;
         this.UserID = userID;
         this.Date = date;
     }
