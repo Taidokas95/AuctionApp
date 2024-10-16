@@ -1,4 +1,5 @@
 ﻿using AuctionApp.Core.Interfaces;
+using Humanizer;
 
 namespace AuctionApp.Core;
 
@@ -13,52 +14,25 @@ public class AuctionService : IAuctionService
     
     public List<Auction> GetOngoingAuctions()
     {
-        return _auctions.FindAll(auction => auction.EndTime > DateTime.Now);
+        List<Auction> ongoingAuctions = _auctionPersistence.GetOngoingAuctions();
+        return ongoingAuctions;
     }
 
     public Auction GetAuctionById(int id)
     {
-         return _auctions.Find(auction => auction.Id == id);
+        Auction auction = GetAuctionById(id);
+        return auction;
     }
 
     public List<Auction> GetOngoingAuctionsByBidUserid(int id)
     {
-        var a = GetOngoingAuctions();
-        var matchingAuctions = new List<Auction>();
-        foreach (var auction in a)
-        {
-            if (GetBidsByUserId(id, auction))
-            {
-                matchingAuctions.Add(auction);
-            }
-        }
-
-        return matchingAuctions;
+        return _auctionPersistence.GetOngoingAuctionsByBidUserid(id);
     }
-
-    private bool GetBidsByUserId(int id, Auction auction)
-    {
-        var userIdPresent = 0;
-        foreach (var bid in auction.Bids)
-        {
-            if (bid.UserID == id)
-            {
-                userIdPresent++;
-            }
-        }
-
-        return userIdPresent > 0;
-    }
+    
 
     public List<Auction> GetWonAuctionsByUserId(int Id)
     {
-        return CompletedAuctions().FindAll(auction => Id == auction.WinnerId);
-        
-    }
-
-    private List<Auction> CompletedAuctions()
-    {
-        return _auctions.FindAll(auction => auction.EndTime > DateTime.Now);
+        return _auctionPersistence.GetWonAuctionsByUserId(Id);
     }
 
     public void AddAuction(Auction auction)
