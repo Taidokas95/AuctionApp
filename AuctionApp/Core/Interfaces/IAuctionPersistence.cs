@@ -6,9 +6,9 @@ public interface IAuctionPersistence
     
     Auction GetAuctionById(int id);
     
-    List<Auction> GetOngoingAuctionsByBidUserid(int id);
+    List<Auction> GetOngoingAuctionsByBidUserid(string id);
     
-    List<Auction> GetWonAuctionsByUserId(int id);
+    List<Auction> GetWonAuctionsByUserId(string id);
     
     void AddAuction(Auction auction);
     

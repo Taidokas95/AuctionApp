@@ -11,7 +11,7 @@ public class BidVm
     [Display (Name = "Amount")]
     public int Amount { get; set; }
     
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     
     public DateTime Date { get; set; }
 

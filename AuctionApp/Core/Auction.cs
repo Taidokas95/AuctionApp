@@ -12,15 +12,17 @@ public class Auction
     private List<Bid> _bids = new List<Bid>();
     public IEnumerable<Bid> Bids => _bids;
 
-    public Auction(int id, string name, string description, int startingPrice, int userId, DateTime endTime)
+    public Auction(string name, string description, int startingPrice, string userId, DateTime endTime)
     {
-        this.Id = id;
+        this.Id = 0;
         this.Name = name;
         this.Description = description;
         this.StartingPrice = startingPrice;
         this.UserId = userId;
         this.EndTime = endTime;
+        this.WinnerId = -1;
     }
+    
 
     public void AddBid(Bid bid)
     {

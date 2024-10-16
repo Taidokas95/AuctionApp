@@ -39,10 +39,10 @@ public class MySqlAuctionPersistence : IAuctionPersistence
         return auction;
     }
 
-    public List<Auction> GetOngoingAuctionsByBidUserid(int id)
+    public List<Auction> GetOngoingAuctionsByBidUserid(string id)
     {
         var auctionDbs = _dbContext.AuctionDb.
-            Where(a => a.UserId == id).ToList();
+            Where(a => a.UserId.Equals(id)).ToList();
         
         List<Auction> result = new List<Auction>();
         foreach (AuctionDb adb in auctionDbs)
@@ -53,10 +53,10 @@ public class MySqlAuctionPersistence : IAuctionPersistence
         return result;
     }
 
-    public List<Auction> GetWonAuctionsByUserId(int id)
+    public List<Auction> GetWonAuctionsByUserId(string id)
     {   
         
-        var auctionDbs = _dbContext.AuctionDb.Where(a => a.WinnerId == id).ToList();
+        var auctionDbs = _dbContext.AuctionDb.Where(a => a.WinnerId.Equals(id)).ToList();
         List<Auction> result = new List<Auction>();
         foreach (AuctionDb adb in auctionDbs)
         {

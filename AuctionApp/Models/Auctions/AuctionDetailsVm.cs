@@ -8,6 +8,8 @@ public class AuctionDetailsVm
     [ScaffoldColumn(false)]
     public int Id { get; set; }
     
+    public string UserId { get; set; }
+    
     public string Name { get; set; }
     
     public string Description { get; set; }
@@ -26,6 +28,7 @@ public class AuctionDetailsVm
         var detailsVM = new AuctionDetailsVm()
         {
             Id = auction.Id,
+            UserId = auction.UserId,
             Name = auction.Name,
             Description = auction.Description,
             Price = auction.StartingPrice,
