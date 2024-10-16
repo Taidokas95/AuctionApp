@@ -4,7 +4,7 @@ using AuctionApp.Core;
 namespace AuctionApp.Models.Auctions;
 
 public class AuctionVm {
-    [ScaffoldColumn(false)]
+    //[ScaffoldColumn(false)]
     public int Id { get; set; }
     
     public string Name { get; set; }

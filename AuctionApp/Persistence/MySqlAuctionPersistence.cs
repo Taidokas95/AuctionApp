@@ -33,7 +33,7 @@ public class MySqlAuctionPersistence : IAuctionPersistence
 
     public Auction GetAuctionById(int id)
     {
-        var auctionDb = _dbContext.AuctionDb.FirstOrDefault(a => a.Id == id);
+        var auctionDb = _dbContext.AuctionDb.SingleOrDefault(a => a.Id == id);
         
         Auction auction = _mapper.Map<Auction>(auctionDb);
         return auction;

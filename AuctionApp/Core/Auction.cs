@@ -14,7 +14,7 @@ public class Auction
 
     public Auction(string name, string description, int startingPrice, string userId, DateTime endTime)
     {
-        this.Id = 0;
+        //this.Id = 0;
         this.Name = name;
         this.Description = description;
         this.StartingPrice = startingPrice;
