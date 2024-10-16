@@ -35,9 +35,15 @@ public class AuctionService : IAuctionService
         return _auctionPersistence.GetWonAuctionsByUserId(Id);
     }
 
-    public void AddAuction(Auction auction)
+    public void AddAuction(string userId, string name, string description, int price)
     {
-        _auctions.Add(auction);
+        if (userId == null) throw new DataException("UserId cannot be null");
+        if (name == null) throw new DataException("Auction name is missing");
+        if (description == null) throw new DataException("Auction description is missing");
+        if (price < 0 || price == null) throw new DataException("Price cannot be negative");
+        
+        Auction auction = new Auction(name,description,price, userId, DateTime.Now.AddDays(14));
+        _auctionPersistence.AddAuction(auction);
     }
     
     

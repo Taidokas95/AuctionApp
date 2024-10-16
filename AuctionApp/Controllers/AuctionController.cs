@@ -1,5 +1,7 @@
+using System.Data;
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
+using AuctionApp.Models;
 using AuctionApp.Models.Auctions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,15 +46,15 @@ namespace AuctionApp.Controllers;
         // POST: AuctionController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CreateAuctionVm createAuctionVm)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return View(createAuctionVm);
             }
-            catch
+            catch (DataException ex)
             {
-                return View();
+                return View(createAuctionVm);
             }
         }
 

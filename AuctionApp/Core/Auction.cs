@@ -6,7 +6,7 @@ public class Auction
     public string Name { get; }
     public string Description { get; set; }
     public int StartingPrice { get; }
-    public int UserId { get; }
+    public string UserId { get; }
     public DateTime EndTime { get; }
     public int WinnerId { get; set; }
     private List<Bid> _bids = new List<Bid>();
@@ -40,10 +40,10 @@ public class Auction
         _bids.Add(bid);
     }
 
-    public int DetermineWinner()
+    public string DetermineWinner()
     {
         var currentHighestBid = _bids[_bids.Count - 1];
-        return currentHighestBid.UserID;
+        return currentHighestBid.userId;
     }
 
     public void EditDescription(string newDescription)

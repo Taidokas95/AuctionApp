@@ -21,7 +21,7 @@ public class BidVm
         {
             Id = bid.Id,
             Amount = bid.Amount,
-            UserId = bid.UserID,
+            UserId = bid.userId,
             Date = bid.Date
         };
     }
