@@ -4,6 +4,13 @@ namespace AuctionApp.Core;
 
 public class AuctionService : IAuctionService
 {
+    private readonly IAuctionPersistence _auctionPersistence;
+
+    public AuctionService(IAuctionPersistence auctionPersistence)
+    {
+        _auctionPersistence = auctionPersistence;
+    }
+    
     public List<Auction> GetOngoingAuctions()
     {
         return _auctions.FindAll(auction => auction.EndTime > DateTime.Now);
