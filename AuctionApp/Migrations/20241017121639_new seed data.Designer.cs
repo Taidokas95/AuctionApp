@@ -3,6 +3,7 @@ using System;
 using AuctionApp.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuctionApp.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    partial class AuctionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241017121639_new seed data")]
+    partial class newseeddata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,7 @@ namespace AuctionApp.Migrations
                         {
                             Id = -1,
                             Description = "Spöke",
-                            EndTime = new DateTime(2024, 10, 22, 14, 50, 34, 573, DateTimeKind.Local).AddTicks(3910),
+                            EndTime = new DateTime(2024, 10, 22, 14, 16, 37, 539, DateTimeKind.Local).AddTicks(6988),
                             Name = "Test: Halloween kostym",
                             StartingPrice = 100,
                             UserId = "hannah.kanjah@gmail.com"
@@ -64,7 +67,7 @@ namespace AuctionApp.Migrations
                         {
                             Id = -2,
                             Description = "I plast",
-                            EndTime = new DateTime(2024, 10, 22, 14, 50, 34, 573, DateTimeKind.Local).AddTicks(3973),
+                            EndTime = new DateTime(2024, 10, 22, 14, 16, 37, 539, DateTimeKind.Local).AddTicks(7072),
                             Name = "Test: Pumpa",
                             StartingPrice = 150,
                             UserId = "Test2"
@@ -102,7 +105,7 @@ namespace AuctionApp.Migrations
                             Id = -1,
                             Amount = 110,
                             AuctionId = -1,
-                            Date = new DateTime(2024, 10, 17, 14, 50, 34, 573, DateTimeKind.Local).AddTicks(4202),
+                            Date = new DateTime(2024, 10, 17, 14, 16, 37, 539, DateTimeKind.Local).AddTicks(7462),
                             UserId = "test2"
                         },
                         new
@@ -110,8 +113,8 @@ namespace AuctionApp.Migrations
                             Id = -2,
                             Amount = 160,
                             AuctionId = -2,
-                            Date = new DateTime(2024, 10, 17, 14, 50, 34, 573, DateTimeKind.Local).AddTicks(4206),
-                            UserId = "hannah.kanjah@gmail.com"
+                            Date = new DateTime(2024, 10, 17, 14, 16, 37, 539, DateTimeKind.Local).AddTicks(7472),
+                            UserId = "test2"
                         });
                 });
 

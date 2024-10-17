@@ -41,8 +41,7 @@ public class MySqlAuctionPersistence : IAuctionPersistence
 
     public List<Auction> GetOngoingAuctionsByBidUserid(string id)
     {
-        var auctionDbs = _dbContext.AuctionDb.
-            Where(a => a.UserId.Equals(id)).ToList();
+        var auctionDbs = _dbContext.AuctionDb.Where(a => a.BidDbs.Any(b => b.UserId == id)).Include(a => a.BidDbs).ToList();
         
         List<Auction> result = new List<Auction>();
         foreach (AuctionDb adb in auctionDbs)
@@ -50,6 +49,7 @@ public class MySqlAuctionPersistence : IAuctionPersistence
             Auction auction = _mapper.Map<Auction>(adb);
             result.Add(auction);
         }
+        
         return result;
     }
 

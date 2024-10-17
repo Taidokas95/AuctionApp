@@ -11,6 +11,7 @@ public class BidVm
     [Display (Name = "Amount")]
     public int Amount { get; set; }
     
+    
     public string UserId { get; set; }
     
     public DateTime Date { get; set; }
@@ -21,7 +22,7 @@ public class BidVm
         {
             Id = bid.Id,
             Amount = bid.Amount,
-            UserId = bid.userId,
+            UserId = bid.UserId,
             Date = bid.Date
         };
     }

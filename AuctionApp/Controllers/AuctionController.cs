@@ -29,15 +29,24 @@ namespace AuctionApp.Controllers;
             return View(auctionsVms);
         }
         
-        public ActionResult MyAuctions() 
+        public ActionResult MyBids()
         {
-            List<Auction> auctions = _auctionService.GetAuctionByUserId(User.Identity.Name);
-            List<AuctionVm> auctionVms = new List<AuctionVm>();
-            foreach(var auction in auctions)
+            try
             {
-                auctionVms.Add(AuctionVm.FromAuction(auction));
+                List<Auction> auctions = _auctionService.GetOngoingAuctionsByBidUserid(User.Identity.Name);
+                List<AuctionVm> auctionsVms = new List<AuctionVm>();
+                foreach (var auction in auctions)
+                {
+                    auctionsVms.Add(AuctionVm.FromAuction(auction)); 
+                }
+            
+                return View(auctionsVms);
             }
-            return View(auctionVms);
+            catch (Exception e)
+            {
+                return View(new List<AuctionVm>());
+            }
+           
         }
 
         // GET: AuctionController/Details/5
@@ -76,6 +85,10 @@ namespace AuctionApp.Controllers;
             }
             catch (DataException ex)
             {
+                if (ModelState.IsValid)
+                {
+                    
+                }
                 return View(createAuctionVm);
             }
         }
