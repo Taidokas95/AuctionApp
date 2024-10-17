@@ -39,11 +39,12 @@ namespace AuctionApp.Migrations
                     b.Property<int>("StartingPrice")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("WinnerId")
-                        .HasColumnType("int");
+                    b.Property<string>("WinnerId")
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -54,11 +55,10 @@ namespace AuctionApp.Migrations
                         {
                             Id = -1,
                             Description = "Auction Description",
-                            EndTime = new DateTime(2024, 10, 20, 13, 7, 23, 410, DateTimeKind.Local).AddTicks(3066),
+                            EndTime = new DateTime(2024, 10, 22, 11, 53, 0, 837, DateTimeKind.Local).AddTicks(1780),
                             Name = "Auction -1",
                             StartingPrice = -1,
-                            UserId = -1,
-                            WinnerId = 0
+                            UserId = "test"
                         });
                 });
 
@@ -77,8 +77,9 @@ namespace AuctionApp.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -92,8 +93,8 @@ namespace AuctionApp.Migrations
                             Id = -1,
                             Amount = -1,
                             AuctionId = -1,
-                            Date = new DateTime(2024, 10, 15, 13, 7, 23, 410, DateTimeKind.Local).AddTicks(3291),
-                            UserId = -2
+                            Date = new DateTime(2024, 10, 17, 11, 53, 0, 837, DateTimeKind.Local).AddTicks(2358),
+                            UserId = "test2"
                         });
                 });
 

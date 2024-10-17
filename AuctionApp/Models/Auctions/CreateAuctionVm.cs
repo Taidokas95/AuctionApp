@@ -11,5 +11,5 @@ public class CreateAuctionVm
     public string? description { get; set; }
     
     [Required]
-    public int? price { get; set; }  
+    public int price { get; set; }  
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using AuctionApp.Core;
 
 namespace AuctionApp.Persistence;
@@ -20,10 +21,10 @@ public class AuctionDb
     [DataType(DataType.DateTime)]
     public DateTime EndTime { get; set; }
     
-    public int WinnerId { get; set; }
+    public string? WinnerId { get; set; }
     
     [Required] 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     
     public List<BidDb> BidDbs { get; set; }
     

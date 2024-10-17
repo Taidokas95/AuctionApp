@@ -3,10 +3,11 @@ using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
 using AuctionApp.Models;
 using AuctionApp.Models.Auctions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuctionApp.Controllers;
-    
+    [Authorize]
     public class AuctionController : Controller
     {
 
@@ -50,6 +51,16 @@ namespace AuctionApp.Controllers;
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    string userId = User.Identity.Name;
+                    string name = createAuctionVm.name;
+                    string description = createAuctionVm.description;
+                    int price = createAuctionVm.price;
+                    
+                    _auctionService.AddAuction(userId, name, description, price);
+                    return RedirectToAction("Index");
+                }
                 return View(createAuctionVm);
             }
             catch (DataException ex)

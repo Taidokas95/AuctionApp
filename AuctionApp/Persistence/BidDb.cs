@@ -16,7 +16,7 @@ public class BidDb
     public DateTime Date { get; set; }
     
     [Required]
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     
     [ForeignKey("AuctionId")]
     public AuctionDb AuctionDb { get; set; }

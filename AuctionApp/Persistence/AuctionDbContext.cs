@@ -19,7 +19,7 @@ public class AuctionDbContext : DbContext
             Description = "Auction Description",
             StartingPrice = -1,
             EndTime = DateTime.Now.AddDays(5),
-            UserId = -1,
+            UserId = "test",
             BidDbs = new List<BidDb>()
         };
         modelBuilder.Entity<AuctionDb>().HasData(adb);
@@ -29,7 +29,7 @@ public class AuctionDbContext : DbContext
             Id = -1,
             Amount = -1,
             Date = DateTime.Now,
-            UserId = -2,
+            UserId = "test2",
             AuctionId = -1,
         };
         modelBuilder.Entity<BidDb>().HasData(bdb1);

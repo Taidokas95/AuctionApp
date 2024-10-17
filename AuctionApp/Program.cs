@@ -1,7 +1,10 @@
+using AuctionApp.Areas.Identity.Data;
 using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
 using AuctionApp.Persistence;
 using Microsoft.EntityFrameworkCore;
+using AuctionApp.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,9 @@ builder.Services.AddScoped<IAuctionService, AuctionService>();
 builder.Services.AddDbContext<AuctionDbContext>(
     options => options.UseMySQL(
         builder.Configuration.GetConnectionString("AuctionDbConnection")));
+builder.Services.AddDbContext<AppIdentityDbContext>(options => options.UseMySQL(builder.Configuration.GetConnectionString("AppIdentityDbConnection")));
+
+builder.Services.AddDefaultIdentity<AuctionAppUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AppIdentityDbContext>();
 
 builder.Services.AddScoped<IAuctionPersistence, MySqlAuctionPersistence>();
 
@@ -34,6 +40,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",

@@ -8,7 +8,7 @@ public class Auction
     public int StartingPrice { get; }
     public string UserId { get; }
     public DateTime EndTime { get; }
-    public int WinnerId { get; set; }
+    public string WinnerId { get; set; }
     private List<Bid> _bids = new List<Bid>();
     public IEnumerable<Bid> Bids => _bids;
     
@@ -20,7 +20,7 @@ public class Auction
         this.StartingPrice = startingPrice;
         this.UserId = userId;
         this.EndTime = endTime;
-        this.WinnerId = -1;
+        this.WinnerId = "test";
     }
 
     public Auction(string name, string description, int startingPrice, string userId, DateTime endTime)
@@ -31,7 +31,7 @@ public class Auction
         this.StartingPrice = startingPrice;
         this.UserId = userId;
         this.EndTime = endTime;
-        this.WinnerId = -1;
+        this.WinnerId = "test";
     }
     
 
