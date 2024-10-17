@@ -98,5 +98,17 @@ public class AuctionService : IAuctionService
             }
         }
     }
-    
+
+    public List<Auction> GetAuctionByUserId(string? identityName)
+    {
+        List<Auction> result = _auctionPersistence.GetAuctionsByUserId(identityName);
+        {
+            if (!result.Any())
+            {
+                throw new Exception("No auctions found");
+            }
+
+            return result;
+        }
+    }
 }

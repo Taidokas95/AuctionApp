@@ -67,6 +67,18 @@ public class MySqlAuctionPersistence : IAuctionPersistence
         return result;
     }
 
+    public List<Auction> GetAuctionsByUserId(string id)
+    {
+        var auctionDbs = _dbContext.AuctionDb.Where(a => a.UserId.Equals(id)).ToList();
+        List<Auction> result = new List<Auction>();
+        foreach (AuctionDb adb in auctionDbs)
+        {
+            Auction auction = _mapper.Map<Auction>(adb);
+            result.Add(auction);
+        }
+        return result;
+    }
+
     public void AddAuction(Auction auction)
     {
         AuctionDb adb = _mapper.Map<AuctionDb>(auction);
@@ -78,4 +90,6 @@ public class MySqlAuctionPersistence : IAuctionPersistence
     {
         throw new NotImplementedException();
     }
+
+    
 }

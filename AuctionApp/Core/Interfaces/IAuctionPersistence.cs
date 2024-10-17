@@ -13,4 +13,5 @@ public interface IAuctionPersistence
     void AddAuction(Auction auction);
     
     void AddBid(Bid bid, int auctionId);
+    List<Auction> GetAuctionsByUserId(string id);
 }
