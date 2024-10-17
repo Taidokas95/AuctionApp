@@ -28,6 +28,17 @@ namespace AuctionApp.Controllers;
             }
             return View(auctionsVms);
         }
+        
+        public ActionResult MyAuctions() 
+        {
+            List<Auction> auctions = _auctionService.GetAuctionByUserId(User.Identity.Name);
+            List<AuctionVm> auctionVms = new List<AuctionVm>();
+            foreach(var auction in auctions)
+            {
+                auctionVms.Add(AuctionVm.FromAuction(auction));
+            }
+            return View(auctionVms);
+        }
 
         // GET: AuctionController/Details/5
         public ActionResult Details(int id)
