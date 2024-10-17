@@ -43,7 +43,8 @@
             @Html.DisplayFor(modelItem => item.EndDate)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.Id })
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Place bid", "CreateBid", new { id = item.Id })
         </td>
     </tr>
 }

@@ -13,7 +13,7 @@ public class AuctionService : IAuctionService
     {
         _auctionPersistence = auctionPersistence;
     }
-    
+
     public List<Auction> GetOngoingAuctions()
     {
         List<Auction> ongoingAuctions = _auctionPersistence.GetOngoingAuctions();
@@ -23,12 +23,12 @@ public class AuctionService : IAuctionService
     public Auction GetAuctionById(int id)
     {
         Auction auction = _auctionPersistence.GetAuctionById(id);
-        
+
         if (auction == null)
         {
             throw new Exception("No auction found with id: " + id);
         }
-        
+
         return auction;
     }
 
@@ -40,10 +40,10 @@ public class AuctionService : IAuctionService
         {
             throw new Exception("No auctions found");
         }
-        
+
         return result;
     }
-    
+
 
     public List<Auction> GetWonAuctionsByUserId(string id)
     {
@@ -53,10 +53,10 @@ public class AuctionService : IAuctionService
         {
             throw new Exception("No won auctions found");
         }
-        
+
         return result;
     }
-    
+
 
     public void AddAuction(string userId, string name, string description, int price)
     {
@@ -64,21 +64,24 @@ public class AuctionService : IAuctionService
         if (name == null) throw new DataException("Auction name is missing");
         if (description == null) throw new DataException("Auction description is missing");
         if (price < 0 || price == null) throw new DataException("Price cannot be negative");
-        
-        Auction auction = new Auction(name,description,price, userId, DateTime.Now.AddDays(14));
+
+        Auction auction = new Auction(name, description, price, userId, DateTime.Now.AddDays(14));
         _auctionPersistence.AddAuction(auction);
     }
-    
-    
-    public void AddBid(Bid bid, int auctionId)
+
+
+    public void AddBid(int amount, string userId, int auctionId)
     {
         var auction = GetAuctionById(auctionId);
-        
+
         if (!auction.Bids.Any())
         {
-            if (bid.Amount >= auction.StartingPrice)
+            if (amount >= auction.StartingPrice)
             {
+                Bid bid = new Bid(amount, userId, auctionId);
                 auction.AddBid(bid);
+                
+                _auctionPersistence.AddBid(bid);
             }
             else
             {
@@ -88,9 +91,11 @@ public class AuctionService : IAuctionService
         else
         {
             var currentHighestBid = auction.Bids.Last();
-            if (bid.Amount > currentHighestBid.Amount)
+            if (amount > currentHighestBid.Amount)
             {
+                Bid bid = new Bid(amount, userId, auctionId);
                 auction.AddBid(bid);
+                _auctionPersistence.AddBid(bid);
             }
             else
             {

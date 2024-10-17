@@ -92,6 +92,40 @@ namespace AuctionApp.Controllers;
                 return View(createAuctionVm);
             }
         }
+        
+        // GET: AuctionController/Create
+        public ActionResult CreateBid()
+        {
+            return View();
+        }
+
+        // POST: AuctionController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateBid(CreateBidVm createBidVm)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    string userId = User.Identity.Name;
+                    int amount = createBidVm.amount;
+                    int auctionId = -1; //have it fetch the auction id properly
+                    
+                    _auctionService.AddBid(amount, userId, auctionId);
+                    return RedirectToAction("Index");
+                }
+                return View(createBidVm);
+            }
+            catch (DataException ex)
+            {
+                if (ModelState.IsValid)
+                {
+                    
+                }
+                return View(createBidVm);
+            }
+        }
 
         // GET: AuctionController/Edit/5
         public ActionResult Edit(int id)

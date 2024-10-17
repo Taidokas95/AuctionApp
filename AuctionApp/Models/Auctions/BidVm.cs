@@ -15,6 +15,8 @@ public class BidVm
     public string UserId { get; set; }
     
     public DateTime Date { get; set; }
+    
+    public int AuctionId { get; set; }
 
     public static BidVm FromBid(Bid bid)
     {
@@ -23,7 +25,8 @@ public class BidVm
             Id = bid.Id,
             Amount = bid.Amount,
             UserId = bid.UserId,
-            Date = bid.Date
+            Date = bid.Date,
+            AuctionId = bid.AuctionId
         };
     }
 }

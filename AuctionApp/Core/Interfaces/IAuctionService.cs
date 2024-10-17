@@ -12,7 +12,7 @@ public interface IAuctionService
     
     void AddAuction(string userId, string name, string description, int price);
     
-    void AddBid(Bid bid, int auctionId);
+    void AddBid(int amount,string userId, int auctionId);
 
     List<Auction> GetAuctionByUserId(string? identityName);
 }

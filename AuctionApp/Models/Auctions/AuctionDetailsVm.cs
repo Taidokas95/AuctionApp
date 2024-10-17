@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AuctionApp.Core;
+using AuctionApp.Models.Auctions;
 
 namespace AuctionApp.Models.Auctions;
 
@@ -34,6 +35,7 @@ public class AuctionDetailsVm
             Price = auction.StartingPrice,
             EndDate = auction.EndTime
         };
+        
         foreach (var bid in auction.Bids)
         {
             detailsVM.BidVms.Add(BidVm.FromBid(bid));
