@@ -43,7 +43,6 @@ public class Auction
             if (bid.Amount > currentHighestBid.Amount)
             {
                 _bids.Add(bid);
-
             }
             else
             {
@@ -51,6 +50,7 @@ public class Auction
             }
         }
         _bids.Add(bid);
+        
     }
 
     public string DetermineWinner()

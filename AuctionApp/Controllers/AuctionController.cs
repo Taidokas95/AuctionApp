@@ -52,6 +52,7 @@ namespace AuctionApp.Controllers;
         // GET: AuctionController/Details/5
         public ActionResult Details(int id)
         {
+            TempData["id"] = id;
             Auction auction = _auctionService.GetAuctionById(id);
             if (auction == null) return BadRequest(); // HTTP 400
             AuctionDetailsVm detailsVm = AuctionDetailsVm.FromAuction(auction);
@@ -108,9 +109,13 @@ namespace AuctionApp.Controllers;
             {
                 if (ModelState.IsValid)
                 {
+                    int auctionId = -1;
                     string userId = User.Identity.Name;
                     int amount = createBidVm.amount;
-                    int auctionId = -1; //have it fetch the auction id properly
+                    if (TempData["id"] != null)
+                    {
+                        auctionId = Convert.ToInt32(TempData["id"]);
+                    }
                     
                     _auctionService.AddBid(amount, userId, auctionId);
                     return RedirectToAction("Index");

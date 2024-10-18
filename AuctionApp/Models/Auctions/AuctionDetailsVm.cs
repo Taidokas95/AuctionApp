@@ -41,6 +41,8 @@ public class AuctionDetailsVm
             detailsVM.BidVms.Add(BidVm.FromBid(bid));
         }
 
+        detailsVM.BidVms.Reverse();
+
         return detailsVM;
     }
 }
