@@ -5,6 +5,7 @@ using AuctionApp.Models;
 using AuctionApp.Models.Auctions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Bcpg;
 
 namespace AuctionApp.Controllers;
     [Authorize]
@@ -171,6 +172,26 @@ namespace AuctionApp.Controllers;
             catch
             {
                 return View();
+            }
+        }
+
+        public ActionResult MyAuctions()
+        {
+            try
+            {
+                List<Auction> auctions = _auctionService.GetAuctionByUserId(User.Identity.Name);
+                List<AuctionVm> auctionsVms = new List<AuctionVm>();
+                foreach (var auction in auctions)
+                {
+                    auctionsVms.Add(AuctionVm.FromAuction(auction));
+                }
+
+                return View(auctionsVms);
+
+            }
+            catch (Exception e)
+            {
+                return View(new List<AuctionVm>());
             }
         }
     }
