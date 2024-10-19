@@ -8,130 +8,138 @@ using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Bcpg;
 
 namespace AuctionApp.Controllers;
-    [Authorize]
-    public class AuctionController : Controller
+
+[Authorize]
+public class AuctionController : Controller
+{
+    private IAuctionService _auctionService;
+
+    public AuctionController(IAuctionService auctionService)
     {
+        _auctionService = auctionService;
+    }
 
-        private IAuctionService _auctionService;
-
-        public AuctionController(IAuctionService auctionService)
+    // GET: AuctionController
+    public ActionResult Index()
+    {
+        List<Auction> auctions = _auctionService.GetOngoingAuctions();
+        List<AuctionVm> auctionsVms = new List<AuctionVm>();
+        foreach (var auction in auctions)
         {
-            _auctionService = auctionService;
+            auctionsVms.Add(AuctionVm.FromAuction(auction));
         }
-        // GET: AuctionController
-        public ActionResult Index()
+
+        return View(auctionsVms);
+    }
+
+    public ActionResult MyBidAuctions()
+    {
+        try
         {
-            List<Auction> auctions = _auctionService.GetOngoingAuctions();
+            List<Auction> auctions = _auctionService.GetOngoingAuctionsByBidUserid(User.Identity.Name);
             List<AuctionVm> auctionsVms = new List<AuctionVm>();
             foreach (var auction in auctions)
             {
-               auctionsVms.Add(AuctionVm.FromAuction(auction)); 
+                auctionsVms.Add(AuctionVm.FromAuction(auction));
             }
+
             return View(auctionsVms);
         }
-        
-        public ActionResult MyBids()
+        catch (Exception e)
         {
-            try
-            {
-                List<Auction> auctions = _auctionService.GetOngoingAuctionsByBidUserid(User.Identity.Name);
-                List<AuctionVm> auctionsVms = new List<AuctionVm>();
-                foreach (var auction in auctions)
-                {
-                    auctionsVms.Add(AuctionVm.FromAuction(auction)); 
-                }
-            
-                return View(auctionsVms);
-            }
-            catch (Exception e)
-            {
-                return View(new List<AuctionVm>());
-            }
-           
+            return View(new List<AuctionVm>());
         }
+    }
 
-        // GET: AuctionController/Details/5
-        public ActionResult Details(int id)
-        {
-            TempData["id"] = id;
-            Auction auction = _auctionService.GetAuctionById(id);
-            if (auction == null) return BadRequest(); // HTTP 400
-            AuctionDetailsVm detailsVm = AuctionDetailsVm.FromAuction(auction);
-            return View(detailsVm);
-        }
+    // GET: AuctionController/Details/5
+    public ActionResult Details(int id)
+    {
+        TempData["id"] = id;
+        Auction auction = _auctionService.GetAuctionById(id);
+        TempData["user"] = auction.UserId;
+        if (auction == null) return BadRequest(); // HTTP 400
+        AuctionDetailsVm detailsVm = AuctionDetailsVm.FromAuction(auction);
+        return View(detailsVm);
+    }
 
-        // GET: AuctionController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+    // GET: AuctionController/Create
+    public ActionResult Create()
+    {
+        return View();
+    }
 
-        // POST: AuctionController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(CreateAuctionVm createAuctionVm)
+    // POST: AuctionController/Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Create(CreateAuctionVm createAuctionVm)
+    {
+        try
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    string userId = User.Identity.Name;
-                    string name = createAuctionVm.name;
-                    string description = createAuctionVm.description;
-                    int price = createAuctionVm.price;
-                    
-                    _auctionService.AddAuction(userId, name, description, price);
-                    return RedirectToAction("Index");
-                }
-                return View(createAuctionVm);
+                string userId = User.Identity.Name;
+                string name = createAuctionVm.name;
+                string description = createAuctionVm.description;
+                int price = createAuctionVm.price;
+
+                _auctionService.AddAuction(userId, name, description, price);
+                return RedirectToAction("Index");
             }
-            catch (DataException ex)
-            {
-                if (ModelState.IsValid)
-                {
-                    
-                }
-                return View(createAuctionVm);
-            }
-        }
-        
-        // GET: AuctionController/Create
-        public ActionResult CreateBid()
-        {
-            return View();
-        }
 
-        // POST: AuctionController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateBid(CreateBidVm createBidVm)
+            return View(createAuctionVm);
+        }
+        catch (DataException ex)
         {
-            try
+
+            return View(createAuctionVm);
+        }
+    }
+
+    // GET: AuctionController/Create
+    public ActionResult CreateBid()
+    {
+        if (User.Identity.Name.Equals(TempData["user"]))
+        {
+            return RedirectToAction("Index");
+        }
+        return View();
+    }
+
+    // POST: AuctionController/Create
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult CreateBid(CreateBidVm createBidVm)
+    {
+        try
+        {
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                string userId = User.Identity.Name;
+                int amount = createBidVm.amount;
+                if (TempData["id"] != null)
                 {
-                    int auctionId = -1;
-                    string userId = User.Identity.Name;
-                    int amount = createBidVm.amount;
-                    if (TempData["id"] != null)
+                    var auctionId = Convert.ToInt32(TempData["id"]);
+                    if (auctionId > -1)
                     {
-                        auctionId = Convert.ToInt32(TempData["id"]);
+                        _auctionService.AddBid(amount, userId, auctionId);
                     }
-                    
-                    _auctionService.AddBid(amount, userId, auctionId);
-                    return RedirectToAction("Index");
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
-                return View(createBidVm);
+                
+                return RedirectToAction("Index");
             }
-            catch (DataException ex)
-            {
-                if (ModelState.IsValid)
-                {
-                    
-                }
-                return View(createBidVm);
-            }
+
+            return View(createBidVm);
         }
+        catch (DataException ex)
+        {
+
+            return View(createBidVm);
+        }
+    }
 
         // GET: AuctionController/Edit/5
         public ActionResult Edit(int id)
@@ -165,45 +173,43 @@ namespace AuctionApp.Controllers;
             }
         }
 
-        // GET: AuctionController/Delete/5
-        public ActionResult Delete(int id)
+    // GET: AuctionController/Delete/5
+    public ActionResult Delete(int id)
+    {
+        return View();
+    }
+
+    // POST: AuctionController/Delete/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Delete(int id, IFormCollection collection)
+    {
+        try
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        catch
         {
             return View();
         }
-
-        // POST: AuctionController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public ActionResult MyAuctions()
-        {
-            try
-            {
-                List<Auction> auctions = _auctionService.GetAuctionByUserId(User.Identity.Name);
-                List<AuctionVm> auctionsVms = new List<AuctionVm>();
-                foreach (var auction in auctions)
-                {
-                    auctionsVms.Add(AuctionVm.FromAuction(auction));
-                }
-
-                return View(auctionsVms);
-
-            }
-            catch (Exception e)
-            {
-                return View(new List<AuctionVm>());
-            }
-        }
     }
 
+    public ActionResult MyAuctions()
+    {
+        try
+        {
+            List<Auction> auctions = _auctionService.GetAuctionByUserId(User.Identity.Name);
+            List<AuctionVm> auctionsVms = new List<AuctionVm>();
+            foreach (var auction in auctions)
+            {
+                auctionsVms.Add(AuctionVm.FromAuction(auction));
+            }
+
+            return View(auctionsVms);
+        }
+        catch (Exception e)
+        {
+            return View(new List<AuctionVm>());
+        }
+    }
+}
