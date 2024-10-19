@@ -73,7 +73,10 @@ public class MySqlAuctionPersistence : IAuctionPersistence
     public List<Auction> GetWonAuctionsByUserId(string id)
     {   
         
-        var auctionDbs = _dbContext.AuctionDb.Where(a => a.WinnerId.Equals(id)).ToList();
+        var auctionDbs = _dbContext.AuctionDb
+            .Where(a => a.WinnerId.Equals(id))
+            .ToList();
+        
         List<Auction> result = new List<Auction>();
         foreach (AuctionDb adb in auctionDbs)
         {

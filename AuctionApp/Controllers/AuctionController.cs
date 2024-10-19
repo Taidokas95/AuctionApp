@@ -212,4 +212,25 @@ public class AuctionController : Controller
             return View(new List<AuctionVm>());
         }
     }
+    
+    public ActionResult MyWonAuctions()
+    {
+        try
+        {
+            List<Auction> auctions = _auctionService.GetWonAuctionsByUserId(User.Identity.Name);
+        
+            List<AuctionVm> auctionsVms = new List<AuctionVm>();
+            foreach (var auction in auctions)
+            {
+                auctionsVms.Add(AuctionVm.FromAuction(auction));
+            }
+
+            return View(auctionsVms);
+        }
+        catch (Exception e)
+        {
+            return View(new List<AuctionVm>());
+        }
+    }
+
 }
