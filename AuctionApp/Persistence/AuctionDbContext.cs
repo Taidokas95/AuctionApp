@@ -32,6 +32,19 @@ public class AuctionDbContext : DbContext
             UserId = "Test2",
             BidDbs = new List<BidDb>()
         };
+        
+        AuctionDb adb3 = new AuctionDb
+        {
+            Id = -3,
+            Name = "Test: Taklampa",
+            Description = "I Kristall",
+            StartingPrice = 5000,
+            EndTime = new DateTime(2024,6,25),
+            UserId = "Test2",
+            WinnerId = "hannah.kanjah@gmail.com",
+            BidDbs = new List<BidDb>()
+        };
+        
         modelBuilder.Entity<AuctionDb>().HasData(adb1, adb2);
 
         BidDb bdb1 = new BidDb()
@@ -49,6 +62,15 @@ public class AuctionDbContext : DbContext
             Date = DateTime.Now,
             UserId = "hannah.kanjah@gmail.com",
             AuctionId = -2,
+        };
+        
+        BidDb bdb3 = new BidDb()
+        {
+            Id = -3,
+            Amount = 5500,
+            Date = new DateTime(2024,6,20),
+            UserId = "hannah.kanjah@gmail.com",
+            AuctionId = -3,
         };
         modelBuilder.Entity<BidDb>().HasData(bdb1, bdb2);
     }
