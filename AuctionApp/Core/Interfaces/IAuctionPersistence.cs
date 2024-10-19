@@ -1,4 +1,6 @@
-﻿namespace AuctionApp.Core.Interfaces;
+﻿using AuctionApp.Models.Auctions;
+
+namespace AuctionApp.Core.Interfaces;
 
 public interface IAuctionPersistence
 {
@@ -12,7 +14,11 @@ public interface IAuctionPersistence
     
     void AddAuction(Auction auction);
     
-    void AddBid(Bid bid
-    );
+    void AddBid(Bid bid);
+    
     List<Auction> GetAuctionsByUserId(string id);
+    
+    void UpdateAuction(Auction auction);
+    
+    void UpdateAuction(int auction, EditVm editVm);
 }

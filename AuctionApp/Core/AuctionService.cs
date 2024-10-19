@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Runtime.InteropServices.JavaScript;
 using AuctionApp.Core.Interfaces;
+using AuctionApp.Models.Auctions;
 using Humanizer;
 
 namespace AuctionApp.Core;
@@ -115,5 +116,21 @@ public class AuctionService : IAuctionService
 
             return result;
         }
+    }
+
+    public void UpdateAuction(Auction auction)
+    {
+        _auctionPersistence.UpdateAuction(auction);    
+    }
+
+    public void UpdateAuction(int id, EditVm editVm)
+    {
+        var auction = _auctionPersistence.GetAuctionById(id);
+        if (auction == null)
+        {
+            throw new Exception("No auction found with id: " + id);
+        }
+        auction.Description = editVm.Description;
+        _auctionPersistence.UpdateAuction(auction); 
     }
 }

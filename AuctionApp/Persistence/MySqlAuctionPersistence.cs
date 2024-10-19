@@ -1,5 +1,6 @@
 ﻿using AuctionApp.Core;
 using AuctionApp.Core.Interfaces;
+using AuctionApp.Models.Auctions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,15 +33,26 @@ public class MySqlAuctionPersistence : IAuctionPersistence
 
     public Auction GetAuctionById(int id)
     {
-        var auctionDb = _dbContext.AuctionDb.Where(a => a.Id == id)
-            .Include(a => a.BidDbs).SingleOrDefault();
-        
-        Auction auction = _mapper.Map<Auction>(auctionDb);
-        foreach (var bidDb in auctionDb.BidDbs)
+        var auctionDb = _dbContext.AuctionDb
+            .Where(a => a.Id == id)
+            .Include(a => a.BidDbs)
+            .SingleOrDefault();
+       
+        if (auctionDb == null)
         {
-            Bid bid = _mapper.Map<Bid>(bidDb);
-            auction.AddBid(bid);
+            return null;
         }
+        Auction auction = _mapper.Map<Auction>(auctionDb);
+
+        if (auctionDb.BidDbs != null)
+        {
+            foreach (var bidDb in auctionDb.BidDbs)
+            {
+                Bid bid = _mapper.Map<Bid>(bidDb);
+                auction.AddBid(bid);
+            }
+        }
+
         return auction;
     }
 
@@ -84,6 +96,33 @@ public class MySqlAuctionPersistence : IAuctionPersistence
         return result;
     }
 
+    public void UpdateAuction(Auction auction)
+    {
+        // Detach previously tracked instances of the same entity
+        var existingEntity = _dbContext.AuctionDb.FirstOrDefault(a => a.Id == auction.Id);
+    
+        if (existingEntity != null)
+        {
+            _dbContext.Entry(existingEntity).State = EntityState.Detached;
+        }
+        
+        AuctionDb adb = _mapper.Map<AuctionDb>(auction);
+        
+        _dbContext.AuctionDb.Attach(adb);
+    
+        _dbContext.Entry(adb).State = EntityState.Modified;
+
+        _dbContext.SaveChanges();
+    }
+
+    public void UpdateAuction(int auction, EditVm editVm)
+    {
+        AuctionDb adb = _mapper.Map<AuctionDb>(auction);
+        _dbContext.AuctionDb.Update(adb);
+        _dbContext.SaveChanges();
+    }
+
+
     public void AddAuction(Auction auction)
     {
         AuctionDb adb = _mapper.Map<AuctionDb>(auction);
@@ -97,6 +136,5 @@ public class MySqlAuctionPersistence : IAuctionPersistence
         _dbContext.BidDb.Add(bdb);
         _dbContext.SaveChanges();
     }
-
     
 }

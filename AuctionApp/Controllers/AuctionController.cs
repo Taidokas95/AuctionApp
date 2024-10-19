@@ -136,21 +136,32 @@ namespace AuctionApp.Controllers;
         // GET: AuctionController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
-        }
+            var auction = _auctionService.GetAuctionById(id);
+            if (auction == null) return NotFound(); // Return 404 if auction not found
 
+            EditVm editVm = EditVm.FromAuction(auction);
+            return View(editVm);
+        }
+        
         // POST: AuctionController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(int id, EditVm editVm)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _auctionService.UpdateAuction(id, editVm);
+                    
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(editVm);
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return View(editVm);
             }
         }
 

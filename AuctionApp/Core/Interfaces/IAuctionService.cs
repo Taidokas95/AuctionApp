@@ -1,4 +1,6 @@
-﻿namespace AuctionApp.Core.Interfaces;
+﻿using AuctionApp.Models.Auctions;
+
+namespace AuctionApp.Core.Interfaces;
 
 public interface IAuctionService
 {
@@ -15,4 +17,8 @@ public interface IAuctionService
     void AddBid(int amount,string userId, int auctionId);
 
     List<Auction> GetAuctionByUserId(string? identityName);
+    
+    void UpdateAuction(Auction auction);
+   
+    void UpdateAuction(int auction, EditVm editVm);
 }
