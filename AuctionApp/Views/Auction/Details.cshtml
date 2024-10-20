@@ -10,26 +10,26 @@
     <h4>Auction Details</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            <b>Auction Name</b>
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
+            <b>Auction Description</b>
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
+            <b>Starting Price</b>
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Price)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndDate)
+            <b>Ends At</b>
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.EndDate)
@@ -49,7 +49,7 @@
                 <b>Amount</b>
             </th>
             <th>
-                <b>UserId</b>
+                <b>Bidder</b>
             </th>
             <th>
                 <b>Date</b>
@@ -76,5 +76,5 @@
     </table>
 </div>
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back To Ongoing Auctions</a>
 </div>

@@ -7,23 +7,23 @@
 <h1>My Auctions</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Auction</a>
 </p>
 
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.First().Name) <!--// Update to reflect valid model property -->
+            <b>Auction Name</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.First().Description)
+            <b>Auction Description</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.First().Price)
+            <b>Starting Price</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.First().EndDate)
+            <b>Ends At</b>
         </th>
         <th></th>
     </tr>

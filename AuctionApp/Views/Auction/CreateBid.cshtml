@@ -4,9 +4,9 @@
     ViewData["Title"] = "CreateBid";
 }
 
-<h1>CreateBid</h1>
+<h1>Place New Bid</h1>
 
-<h4>CreateBidVm</h4>
+<h4>Enter the amount you want to bid</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,6 +25,6 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Details" asp-route-id="@ViewContext.RouteData.Values["Id"]">Back To Auction Details</a> 
 </div>
 

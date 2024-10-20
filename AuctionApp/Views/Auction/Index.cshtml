@@ -4,25 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Ongoing Auctions</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            <b>Auction Name</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            <b>Auction Description</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            <b>Starting Price</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EndDate)
+            <b>Ends At</b>
         </th>
         <th></th>
     </tr>
